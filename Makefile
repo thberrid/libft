@@ -6,14 +6,17 @@
 #    By: thberrid <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/17 17:15:46 by thberrid          #+#    #+#              #
-#    Updated: 2019/05/30 08:37:56 by thberrid         ###   ########.fr        #
+#    Updated: 2019/05/30 18:42:25 by thberrid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SHELL = /bin/sh
 .SUFFIXES:
 .SUFFIXES: .c .o
+
 AR = ar rc
+OBJDIR = obj
+VAPTH = ./src
 
 NAME = libft.a
 SRCS = get_next_line.c \
@@ -96,13 +99,11 @@ SRCS = get_next_line.c \
 INC_NAME = libft.h \
 		   get_next_line.h
 CPPFLAGS = -I ./include
-OBJDIR = obj
 INCDIR = include
 OBJS_NAME = $(SRCS:.c=.o)
 OBJS = $(addprefix $(OBJDIR)/, $(OBJS_NAME))
 FILES_H = $(addprefix $(INCDIR)/, $(INC_NAME))
 CPPFLAGS = -I ./include
-
 
 .PHONY: all
 all: $(NAME)
