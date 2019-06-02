@@ -6,7 +6,7 @@
 #    By: thberrid <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/17 17:15:46 by thberrid          #+#    #+#              #
-#    Updated: 2019/05/30 18:42:25 by thberrid         ###   ########.fr        #
+#    Updated: 2019/05/31 21:28:03 by thberrid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ SHELL = /bin/sh
 .SUFFIXES: .c .o
 
 AR = ar rc
+VPATH = src
 OBJDIR = obj
-VAPTH = ./src
 
 NAME = libft.a
 SRCS = get_next_line.c \
@@ -60,6 +60,7 @@ SRCS = get_next_line.c \
 	   ft_memrealloc.c \
 	   ft_memset.c \
 	   ft_memswap.c \
+	   ft_putascii.c \
 	   ft_putchar.c \
 	   ft_putchar_fd.c \
 	   ft_putendl.c \
@@ -96,14 +97,14 @@ SRCS = get_next_line.c \
 	   ft_strtrim.c \
 	   ft_tolower.c \
 	   ft_toupper.c
-INC_NAME = libft.h \
-		   get_next_line.h
-CPPFLAGS = -I ./include
-INCDIR = include
-OBJS_NAME = $(SRCS:.c=.o)
-OBJS = $(addprefix $(OBJDIR)/, $(OBJS_NAME))
-FILES_H = $(addprefix $(INCDIR)/, $(INC_NAME))
-CPPFLAGS = -I ./include
+INC_NAME 	= libft.h \
+			  get_next_line.h
+CPPFLAGS 	= -I ./include
+INCDIR 		= include
+CPPFLAGS 	= -I ./include
+OBJS_NAME 	= $(SRCS:.c=.o)
+OBJS 		= $(addprefix $(OBJDIR)/, $(OBJS_NAME))
+FILES_H 	= $(addprefix $(INCDIR)/, $(INC_NAME))
 
 .PHONY: all
 all: $(NAME)
