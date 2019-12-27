@@ -15,12 +15,6 @@
 
 # define BUFF_SIZE 5
 
-typedef struct	s_buf
-{
-	char 	arr[BUFF_SIZE];
-	int		len;
-}				t_buf;
-
 int		get_next_line(const int fd, char **line);
 
 #endif

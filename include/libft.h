@@ -16,7 +16,6 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <get_next_line.h>
 
 # define FT_INTMAX 2147483647
 # define FT_INTMIN -2147483648
