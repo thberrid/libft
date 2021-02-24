@@ -29,6 +29,7 @@ SRCS = get_next_line.c \
 	   ft_atoi.c \
 	   ft_atol.c \
 	   ft_bzero.c \
+	   ft_intlen.c \
 	   ft_isalnum.c \
 	   ft_ischarset.c \
 	   ft_isalpha.c \
@@ -99,7 +100,8 @@ SRCS = get_next_line.c \
 	   ft_tolower.c \
 	   ft_toupper.c
 INC_NAME 	= libft.h \
-			  get_next_line.h
+			  get_next_line.h \
+			  ft_printf.h
 INCDIR 		= includes
 CPPFLAGS 	= -I ./$(INCDIR)
 CFLAGS		= -Wall -Wextra -Werror

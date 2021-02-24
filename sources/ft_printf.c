@@ -26,13 +26,232 @@ int		flags_getlen(const char *str)
 	return (index);
 }
 
-int		flags_print(int fd, const char *fmt, va_list ap)
+int		fset_precision(t_pa *flags, const char *fmt)
 {
-	int		flags;
-	int		retrn;
+	if (flags->precision)
+		return (0);
+	if (!ft_isdigit(fmt[1]) || fmt[1] == '0')
+		return (0);
+	flags->precision = ft_atoi(&fmt[1]);
+	return (ft_intlen(flags->precision));
+}
 
-	flags = flags_set(fmt);
-	retrn = printf_dispatcher(fd, flags, ap);
+int		fset_zero(t_pa *flags, const char *fmt)
+{
+	if (flags->padd_fill)
+		return (0);
+	flags->padd_fill = '0';
+	return (1);
+}
+
+int		fset_space(t_pa *flags, const char *fmt)
+{
+	if (flags->padd_fill)
+		return (0);
+	flags->padd_fill = ' ';
+	return (1);
+}
+
+int		fset_dec(t_pa *flags, const char *fmt)
+{
+	if (flags->type)
+		return (0);
+	flags->type = PFT_INT;
+	return (1);
+}
+
+int		fset_float(t_pa *flags, const char *fmt)
+{
+	if (flags->type)
+		return (0);
+	flags->type = PFT_FLOAT;
+	return (1);
+}
+
+int		fset_char(t_pa *flags, const char *fmt)
+{
+	if (flags->type)
+		return (0);
+	flags->type = PFT_CHAR;
+	return (1);
+}
+
+int		fset_str(t_pa *flags, const char *fmt)
+{
+	if (flags->type)
+		return (0);
+	flags->type = PFT_STR;
+	return (1);
+}
+
+int		fset_ptr(t_pa *flags, const char *fmt)
+{
+	if (flags->type)
+		return (0);
+	flags->type = PFT_PTR;
+	return (1);
+}
+
+int		fset_long(t_pa *flags, const char *fmt)
+{
+	if (flags->type)
+		return (0);
+	flags->type = PFT_LONG;
+	return (1);
+}
+
+int		fset_oct(t_pa *flags, const char *fmt)
+{
+	if (flags->base)
+		return (0);
+	flags->base = PFB_OCT;
+	return (1);
+}
+
+int		fset_bin(t_pa *flags, const char *fmt)
+{
+	if (flags->base)
+		return (0);
+	flags->base = PFB_BIN;
+	return (1);
+}
+
+int		fset_percent(t_pa *flags, const char *fmt)
+{
+	if (flags->len || flags->padd_fill || flags->precision ||
+		flags->type || flags->base)
+		return (0);
+	if (!ft_isspace(fmt[1]))
+		return (0);
+	flags->padd_fill = '%';
+	flags->type = PFT_CHAR;
+	flags->len = 1;
+	return (1);
+}
+
+int		fset_len(t_pa *flags, const char *fmt)
+{
+	if (flags->len)
+		return (0);
+	flags->len = ft_atoi(fmt);
+	return (ft_intlen(flags->len));
+}
+
+t_flags_settings	*get_f_settings(void)
+{
+	static t_flags_settings fl_sets[14] = {
+		{ ".", fset_precision },
+		{ "0", fset_zero },
+		{ " ", fset_space },
+		{ "d", fset_dec },
+		{ "f", fset_float },
+		{ "c", fset_char },
+		{ "s", fset_str },
+		{ "l", fset_long },
+		{ "p", fset_ptr },
+		{ "o", fset_oct },
+		{ "b", fset_bin },
+		{ "%", fset_percent },
+		{ "123456789", fset_len },
+		{ NULL, NULL },
+	};
+	return (fl_sets);
+}
+
+int		flags_parse(t_pa *flags, const char *fmt)
+{
+	int					index;
+	int					jndex;
+	int					retrn;
+	t_flags_settings	*f_settings;
+
+	index = 1;
+	f_settings = get_f_settings();
+	while (fmt[index] && !ft_isspace(fmt[index]))
+	{
+		while (f_settings[jndex].id)
+		{
+			if (ft_ischarset(fmt[index], f_settings[jndex].id))
+			{
+				if (!(retrn = f_settings[jndex].f(flags, fmt[index])))
+					return (0);
+				jndex += retrn;
+			}
+			jndex += 1;
+		}		
+		index += 1;
+	}
+	return (1);
+}
+
+t_flags_types	*ftypes_get(void)
+{
+	static t_flags_types ftype[7] = {
+		{ PFT_INT, ftype_int },
+		{ PFT_PERCENT, ftype_percent },
+		{ PFT_FLOAT, ftype_float }, // atof
+		{ PFT_CHAR, ftype_char },
+		{ PFT_STR, ftype_str },
+		{ PFT_PTR, ftype_ptr },
+		{ PFT_LONG, ftype_long },
+		{ NULL, NULL }
+	};
+	return (ftype);
+}
+
+int		ftype_int(t_pa *flags, char **s, va_list ap)
+{
+	int 	arg;
+	int		s_len;
+
+	arg = va_arg(ap, int);
+	*s = ft_itoa(arg);
+	if (!s)
+		return (0);
+	s_len = ft_strlen(s);
+	if (!flags->len)
+		flags->len = s_len;
+	return (1);
+}
+
+int		arg_build(t_pa *flags, char **str, va_list ap)
+{
+	t_flags_types	*ftype;
+	int				index;
+
+	index = 0;
+	ftype = ftypes_get();
+	while (ftype[index].id)
+	{
+		if (ftype[index].id == flags->type)
+		{
+			if (ftype[index].f(flags, str, ap))
+				return (0);
+			return (1);
+		}
+		index += 1;
+	}
+	return (0);
+}
+
+int		arg_print(int fd, const char *fmt, va_list ap)
+{
+	t_pa	flags;
+	int		retrn;
+	char	*str;
+
+	str = NULL;
+	ft_bzero(&flags, sizeof(t_pa));
+	if (!flags_parse(&flags, fmt))
+		return (0);
+	// get value from varg with type_size ??? + len
+	// make it string with base + alt option
+	// then align it with padd fill plus alignment ???
+	// if (!arg_build(&flags, &str, ap))
+	//	return (0);
+	// gere l;'alignement ici ?
+	retrn = write(fd, str, flags.len);
+	ft_strdel(&str);
 	return (retrn);
 }
 
@@ -51,12 +270,12 @@ int		uprintf(int fd, const char *restrict format, va_list ap)
 		if (format[current] == '%')
 		{
 			flushed = write(fd, &format[from], current - from);
-			current + flags_getlen(&format[current]);
-			from = current;
 			printed += flushed;
-			if (!(flushed = flags_print(fd, &format[current], ap)))
+			if (!(flushed = arg_print(fd, &format[current], ap)))
 				return (-1);
 			printed += flushed;
+			current + flags_getlen(&format[current]);
+			from = current;
 		}
 		current += 1;
 	}

@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <get_next_line.h>
-# include <stdarg.h>
+# include <ft_printf.h>
 
 # define FT_INTMAX 2147483647
 # define FT_INTMIN -2147483648
@@ -31,8 +31,8 @@ typedef struct	s_list
 	struct s_list	*next;
 }				t_list;
 
-int				printf(const char *restrict format, ...);
 void			print_memory(const void *addr, size_t size);
+int				ft_intlen(int n);
 void			ft_addrswap(void **addra, void **addrb);
 int				ft_factorial(int nb);
 int				ft_power(int nb, int power);
