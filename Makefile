@@ -15,7 +15,7 @@ SHELL = /bin/sh
 .SUFFIXES: .c .o
 
 AR = ar rc
-VPATH = src
+VPATH = sources
 OBJDIR = obj
 
 NAME = libft.a
@@ -99,9 +99,9 @@ SRCS = get_next_line.c \
 	   ft_toupper.c
 INC_NAME 	= libft.h \
 			  get_next_line.h
-CPPFLAGS 	= -I ./include
-INCDIR 		= include
-CPPFLAGS 	= -I ./include
+INCDIR 		= includes
+CPPFLAGS 	= -I ./$(INCDIR)
+CFLAGS		= -Wall -Wextra -Werror
 OBJS_NAME 	= $(SRCS:.c=.o)
 OBJS 		= $(addprefix $(OBJDIR)/, $(OBJS_NAME))
 FILES_H 	= $(addprefix $(INCDIR)/, $(INC_NAME))
@@ -117,7 +117,11 @@ $(OBJDIR)/%.o: %.c $(FILES_H) | $(OBJDIR)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 $(OBJDIR):
-	mkdir $@
+	mkdir -p $@
+
+test: all
+	$(CC) $(FLAGS) $(CPPFLAGS) -c -o $(OBJDIR)/test.o main.c
+	$(CC) $(CPPFLAGS) -L . -lft -o test $(FILES_O) $(OBJDIR)/test.o
 
 .PHONY: clean
 clean: 

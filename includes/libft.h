@@ -16,12 +16,12 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <get_next_line.h>
 
 # define FT_INTMAX 2147483647
 # define FT_INTMIN -2147483648
 # define FT_BYTSIZE 8
 # define FT_ERROR -1
-# define FT_UNUSED(x) (void)(x)
 
 typedef struct	s_list
 {
