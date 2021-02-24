@@ -20,6 +20,7 @@ OBJDIR = obj
 
 NAME = libft.a
 SRCS = get_next_line.c \
+	   ft_printf.c \
 	   print_memory.c \
  	   ft_addrswap.c \
 	   ft_factorial.c \

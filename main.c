@@ -16,6 +16,6 @@ int main(void)
 {
 	char	m[1024];
 
-	print_memory(m, 1024);
+	ft_printf("ok boomer %s\n", "lol");
 	return (0);
 }
