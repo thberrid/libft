@@ -184,22 +184,22 @@ int		flags_parse(t_pa *flags, const char *fmt)
 	return (1);
 }
 
-t_flags_types	*ftypes_get(void)
+t_flags_types	*vaarg_gettype(void)
 {
 	static t_flags_types ftype[7] = {
-		{ PFT_INT, ftype_int },
-		{ PFT_PERCENT, ftype_percent },
-		{ PFT_FLOAT, ftype_float }, // atof
-		{ PFT_CHAR, ftype_char },
-		{ PFT_STR, ftype_str },
-		{ PFT_PTR, ftype_ptr },
-		{ PFT_LONG, ftype_long },
+		{ PFT_INT, vaarg_getint },
+		{ PFT_PERCENT, vaarg_getpercent },
+		{ PFT_FLOAT, vaarg_getfloat },
+		{ PFT_CHAR, vaarg_getchar },
+		{ PFT_STR, vaarg_getstr },
+		{ PFT_PTR, vaarg_getptr },
+		{ PFT_LONG, vaarg_getlong },
 		{ NULL, NULL }
 	};
 	return (ftype);
 }
 
-int		ftype_int(t_pa *flags, char **s, va_list ap)
+int		vaarg_getint(t_pa *flags, char **s, va_list ap)
 {
 	int 	arg;
 	int		s_len;
@@ -214,7 +214,62 @@ int		ftype_int(t_pa *flags, char **s, va_list ap)
 	return (1);
 }
 
-int		arg_build(t_pa *flags, char **str, va_list ap)
+int		vaarg_getstr(t_pa *flags, char **s, va_list ap)
+{
+	int 	arg;
+	int		s_len;
+
+	arg = va_arg(ap, int);
+	*s = ft_itoa(arg);
+	if (!s)
+		return (0);
+	s_len = ft_strlen(s);
+	if (!flags->len)
+		flags->len = s_len;
+	return (1);
+}
+
+int		vaarg_getfloat(t_pa *flags, char **s, va_list ap)
+{
+	float 	arg;
+	int		s_len;
+
+	arg = va_arg(ap, float);
+	*s = ft_ftoa(arg);
+	if (!s)
+		return (0);
+	s_len = ft_strlen(s);
+	if (!flags->len)
+		flags->len = s_len;
+	return (1);
+}
+
+int		vaarg_getchar(t_pa *flags, char **s, va_list ap)
+{
+	char 	arg;
+	int		s_len;
+
+	arg = (char)va_arg(ap, int);
+	*s = ft_strdup(&arg);
+	if (!s)
+		return (0);
+	flags->len = 1;
+	return (1);
+}
+
+int		vaarg_getpercent(t_pa *flags, char **s, va_list ap)
+{
+	int 	arg;
+	int		s_len;
+
+	*s = ft_strdup("%");
+	if (!*s)
+		return (0);
+	flags->len = 1;
+	return (1);
+}
+
+int		vaarg_getnext(t_pa *flags, void *str, va_list ap)
 {
 	t_flags_types	*ftype;
 	int				index;
@@ -242,16 +297,15 @@ int		arg_print(int fd, const char *fmt, va_list ap)
 
 	str = NULL;
 	ft_bzero(&flags, sizeof(t_pa));
-	if (!flags_parse(&flags, fmt))
-		return (0);
-	// get value from varg with type_size ??? + len
-	// make it string with base + alt option
-	// then align it with padd fill plus alignment ???
-	// if (!arg_build(&flags, &str, ap))
-	//	return (0);
-	// gere l;'alignement ici ?
-	retrn = write(fd, str, flags.len);
-	ft_strdel(&str);
+	retrn = flags_parse(&flags, fmt);
+	if (retrn)
+		retrn = vaarg_getnext(&flags, &str, ap);
+	if (retrn)
+		retrn = pf_alignemnt(&flags, &str);
+	if (retrn)
+		retrn = write(fd, str, flags.len);
+	if (str)
+		ft_strdel(&str);
 	return (retrn);
 }
 
