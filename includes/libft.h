@@ -32,7 +32,7 @@ typedef struct	s_list
 }				t_list;
 
 void			print_memory(const void *addr, size_t size);
-int				ft_intlen(int n);
+int				ft_intlen(int n, const char *base);
 void			ft_addrswap(void **addra, void **addrb);
 int				ft_factorial(int nb);
 int				ft_power(int nb, int power);
@@ -87,6 +87,10 @@ char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s);
 char			**ft_strsplit(char const *s, char c);
 char			*ft_itoa(int n);
+char			*ft_ftoa(float f);
+char			*ft_ltoa(long n);
+char			*ft_itoabase(int n, const char *base);
+char			*ft_ltoabase(long n, const char *base);
 void			ft_putascii(void *ptr, size_t len);
 void			ft_putchar(char c);
 void			ft_putstr(char const *s);

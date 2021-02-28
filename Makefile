@@ -38,6 +38,10 @@ SRCS = get_next_line.c \
 	   ft_isspace.c \
 	   ft_isprint.c \
 	   ft_itoa.c \
+	   ft_itoabase.c \
+	   ft_ftoa.c \
+	   ft_ltoa.c \
+	   ft_ltoabase.c \
 	   ft_lstadd.c \
 	   ft_lstgetlast.c \
 	   ft_lstgetn.c \

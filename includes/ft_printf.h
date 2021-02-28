@@ -28,27 +28,38 @@
 # define    PFB_DEC     10
 # define    PFB_OCT     16
 
-typedef struct  s_pa
+# define	PFB_BIN		"01"
+# define	PFB_DEC		"0123456789"
+# define	PFB_OCT		"0123456789abcdef"
+# define	PFB_OCTUP	"0123456789ABCDEF"
+
+typedef struct  s_pf_flag
 {
-    size_t  len;
+    size_t  fieldlen;
     char    padd_fill;
     int     precision;
     int     type;
-    int     base;
+    char	*base;
     int     type_size;   
-}               t_pa;
+}               t_pf_flag;
 
 typedef struct  s_flags_settings
 {
     char    *id;
-    int    (*f)(t_pa *, const char *);
+    int    (*f)(t_pf_flag *, const char *);
 }               t_flags_settings;
 
-typedef struct  t_flags_types
+typedef struct  s_flags_types
 {
     int     id;
-    int    (*f)(t_pa *, char **, va_list);
+    int    (*f)(t_pf_flag *, char **, va_list);
 }               t_flags_types;
+
+typedef struct  s_pfstr_align
+{
+    int     id;
+    int    (*f)(t_pf_flag *, char **);
+}               t__pfstr_align;
 
 int			    ft_printf(const char *restrict format, ...);
 int		        ft_dprintf(int fd, const char *restrict format, ...);
