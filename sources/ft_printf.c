@@ -17,23 +17,13 @@ int		flags_getlen(const char *str)
 	int		index;
 
 	index = 0;
-	while (str[index + 1])
+	while (str[index])
 	{
-		if (str[index + 1] == ' ')
+		if (ft_isspace(str[index]))
 			break ;
 		index += 1;
 	}
 	return (index);
-}
-
-int		fset_precision(t_pf_flag *flags, const char *fmt)
-{
-	if (flags->precision)
-		return (0);
-	if (!ft_isdigit(fmt[1]) || fmt[1] == '0')
-		return (0);
-	flags->precision = ft_atoi(&fmt[1]);
-	return (ft_intlen(flags->precision, BASE_DEC));
 }
 
 int		fset_zero(t_pf_flag *flags, const char *fmt)
@@ -148,11 +138,29 @@ int		fset_percent(t_pf_flag *flags, const char *fmt)
 
 int		fset_len(t_pf_flag *flags, const char *fmt)
 {
+	int		retrn;
+
 	(void)fmt;
 	if (flags->fieldlen)
 		return (0);
+	if (!flags->padd_fill)
+		flags->padd_fill = ' ';
 	flags->fieldlen = ft_atoi(fmt);
-	return (1);
+	retrn = 0;
+	while (ft_isdigit(fmt[retrn]))
+		retrn += 1;
+	return (retrn);
+}
+
+
+int		fset_precision(t_pf_flag *flags, const char *fmt)
+{
+	if (flags->precision)
+		return (0);
+	if (!ft_isdigit(fmt[1]) || fmt[1] == '0')
+		return (0);
+	flags->precision = ft_atoi(&fmt[1]);
+	return (ft_intlen(flags->precision, BASE_DEC));
 }
 
 t_flags_settings	*get_f_settings(void)
@@ -160,7 +168,6 @@ t_flags_settings	*get_f_settings(void)
 	static t_flags_settings fl_sets[14] = {
 		{ ".", fset_precision },
 		{ "0", fset_zero },
-		{ " ", fset_space },
 		{ "d", fset_dec },
 		{ "f", fset_float },
 		{ "c", fset_char },
@@ -174,36 +181,6 @@ t_flags_settings	*get_f_settings(void)
 		{ NULL, NULL },
 	};
 	return (fl_sets);
-}
-
-int		flags_parse(t_pf_flag *flags, const char *fmt)
-{
-	int					index;
-	int					jndex;
-	int					retrn;
-	t_flags_settings	*f_settings;
-
-	index = 1;
-	f_settings = get_f_settings();
-	jndex = 0;
-	while (fmt[index] && !ft_isspace(fmt[index]))
-	{
-		while (f_settings[jndex].id)
-		{
-			if (ft_ischarset(fmt[index], f_settings[jndex].id))
-			{
-				if (!(retrn = f_settings[jndex].f(flags, &fmt[index])))
-					return (0);
-				index += retrn;
-				break ;
-			}
-			jndex += 1;
-		}		
-		index += 1;
-	}
-	if (!flags->type)
-		return (0);
-	return (1);
 }
 
 t_pfstr_align	*pf_getaligmnt()
@@ -374,6 +351,35 @@ int		vaarg_get(t_pf_flag *flags, char **str, va_list ap)
 		index += 1;
 	}
 	return (0);
+}
+
+int		flags_parse(t_pf_flag *flags, const char *fmt)
+{
+	int					index;
+	int					jndex;
+	int					retrn;
+	t_flags_settings	*f_settings;
+
+	index = 1;
+	f_settings = get_f_settings();
+	while (fmt[index] && !ft_isspace(fmt[index]))
+	{
+		jndex = 0;
+		while (f_settings[jndex].id)
+		{
+			if (ft_ischarset(fmt[index], f_settings[jndex].id))
+			{
+				if (!(retrn = f_settings[jndex].f(flags, &fmt[index])))
+					return (0);
+				index += retrn;
+				break ;
+			}
+			jndex += 1;
+		}
+	}
+	if (!flags->type)
+		return (0);
+	return (1);
 }
 
 int		arg_print(int fd, const char *fmt, va_list ap)
