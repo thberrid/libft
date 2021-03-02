@@ -37,7 +37,7 @@ char	*ft_itoabase(int n, const char *base)
 	while (n)
 	{
 		str[index] = base[n / exponent];
-		n %= n / exponent;
+		n %= exponent;
 		exponent /= baselen;
 		index += 1;
 	}

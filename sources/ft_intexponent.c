@@ -15,7 +15,7 @@ int	ft_intexponent(int n, int baselen)
 	int		exponent;
 
 	exponent = 1;
-	while (n / exponent)
+	while (n / exponent >= baselen)
 		exponent *= baselen;
 	return (exponent);
 }

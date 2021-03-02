@@ -27,11 +27,11 @@ char	*ft_ultoabase(unsigned long n, const char *base)
 	index = 0;
 	if (!(str = ft_strnew(strlen)))
 		return (NULL);
-	exponent = ft_intexponent(n, baselen);
+	exponent = ft_longexponent(n, baselen);
 	while (n)
 	{
 		str[index] = base[n / exponent];
-		n %= n / exponent;
+		n %= exponent;
 		exponent /= baselen;
 		index += 1;
 	}
