@@ -27,9 +27,10 @@ static int	put_radix(int radix, char *str)
 	decimal = ft_intexponent(radix, 10);
 	while (radix)
 	{
-		str[index] = radix / decimal;
-		index += 1;
+		str[index] = (radix / decimal) + '0';
+		radix %= decimal;
 		decimal /= 10;
+		index += 1;
 	}
 	return (index);
 }
@@ -53,8 +54,8 @@ char	*ft_ftoa(float f, int precision)
 	{
 		f *= 10;
 		radix = (int)f;
+		str[index] = radix + '0';
 		f -= (float)radix;
-		str[index] = radix;
 		index += 1;
 	}
 	return (str);

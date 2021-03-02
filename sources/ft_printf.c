@@ -129,8 +129,6 @@ int		fset_ptr(t_pf_flag *flags, const char *fmt)
 int		fset_long(t_pf_flag *flags, const char *fmt)
 {
 	(void)fmt;
-	if (flags->type)
-		return (0);
 	flags->type = PFT_LONG;
 	return (1);
 }
@@ -196,7 +194,8 @@ int		flags_parse(t_pf_flag *flags, const char *fmt)
 			{
 				if (!(retrn = f_settings[jndex].f(flags, &fmt[index])))
 					return (0);
-				jndex += retrn;
+				index += retrn;
+				break ;
 			}
 			jndex += 1;
 		}		
@@ -309,8 +308,7 @@ int		vaarg_getfloat(t_pf_flag *flags, char **s, va_list ap)
 	arg = (float)va_arg(ap, double);
 	if (!flags->precision)
 		flags->precision = PF_DEFAULT_PRECISION;
-	*s = ft_ftoa(arg, flags->precision);
-	if (!s)
+	if (!(*s = ft_ftoa(arg, flags->precision)))
 		return (0);
 	s_len = ft_strlen(*s);
 	if (!flags->fieldlen)
@@ -387,6 +385,8 @@ int		arg_print(int fd, const char *fmt, va_list ap)
 	retrn = flags_parse(&flags, fmt);
 	if (retrn)
 		retrn = vaarg_get(&flags, &str, ap);
+	else
+		write(2, "ft_printf: parse error\n", 23);
 	if (retrn)
 		retrn = pf_alignemnt(&flags, &str);
 	if (retrn)

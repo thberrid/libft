@@ -132,7 +132,7 @@ $(OBJDIR)/%.o: %.c $(FILES_H) | $(OBJDIR)
 $(OBJDIR):
 	mkdir -p $@
 
-test: all
+test: all main.c
 	$(CC) main.c $(FLAGS) $(CPPFLAGS) -L . -lft -o test
 
 .PHONY: clean
