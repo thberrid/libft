@@ -16,6 +16,6 @@ int main(void)
 {
 	char	m[1024];
 
-	ft_printf("ok boomer %x\n", 4);
+	ft_printf("ok boomer %s %p\n", "lol", "ok");
 	return (0);
 }

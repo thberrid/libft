@@ -201,6 +201,8 @@ int		flags_parse(t_pf_flag *flags, const char *fmt)
 		}		
 		index += 1;
 	}
+	if (!flags->type)
+		return (0);
 	return (1);
 }
 

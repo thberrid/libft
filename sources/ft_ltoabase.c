@@ -33,7 +33,7 @@ char	*ft_ltoabase(long n, const char *base)
 		index += 1;
 	}
 	exponent = ft_longexponent(n, baselen);
-	while (n)
+	while (exponent)
 	{
 		str[index] = base[n / exponent];
 		n %= exponent;

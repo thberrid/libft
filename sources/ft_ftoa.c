@@ -25,7 +25,7 @@ static int	put_radix(int radix, char *str)
 		radix *= -1;
 	}
 	decimal = ft_intexponent(radix, 10);
-	while (radix)
+	while (decimal)
 	{
 		str[index] = (radix / decimal) + '0';
 		radix %= decimal;
@@ -44,10 +44,14 @@ char	*ft_ftoa(float f, int precision)
 
 	radix = (int)f;
 	f -= (float)radix;
-	len = ft_intlen(radix, BASE_DEC) + precision + 1;
+	if (precision)
+		precision += 1;
+	len = ft_intlen(radix, BASE_DEC) + precision;
 	if (!(str = ft_strnew(len)))
 		return (NULL);
 	index = put_radix(radix, str);
+	if (!precision)
+		return (str);
 	str[index] = '.';
 	index += 1;
 	while (index < len)

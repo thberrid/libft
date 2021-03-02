@@ -24,6 +24,9 @@
 # define FT_BYTSIZE 8
 # define FT_ERROR -1
 
+# define FT_TRUE 	1
+# define FT_FALSE 	0
+
 # define DEFAULT_STR_FLOAT_LEN 12
 
 # define	BASE_BIN	"01"

@@ -34,7 +34,7 @@ char	*ft_itoabase(int n, const char *base)
 		n *= -1;
 	}
 	exponent = ft_intexponent(n, baselen);
-	while (n)
+	while (exponent)
 	{
 		str[index] = base[n / exponent];
 		n %= exponent;

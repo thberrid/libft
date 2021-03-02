@@ -28,7 +28,7 @@ char	*ft_ultoabase(unsigned long n, const char *base)
 	if (!(str = ft_strnew(strlen)))
 		return (NULL);
 	exponent = ft_longexponent(n, baselen);
-	while (n)
+	while (exponent)
 	{
 		str[index] = base[n / exponent];
 		n %= exponent;
