@@ -18,18 +18,27 @@ char	*ft_itoabase(int n, const char *base)
 	char	*str;
 	int		strlen;
 	int		index;
-	
+	int		exponent;
+
 	if (!base)
-		base = PFB_DEC;
+		base = BASE_DEC;
 	baselen = ft_strlen(base);
 	strlen = ft_intlen(n, base);
 	index = 0;
 	if (!(str = ft_strnew(strlen)))
 		return (NULL);
+	if (n < 0)
+	{
+		str[0] = '-';
+		index += 1;
+		n *= -1;
+	}
+	exponent = ft_intexponent(n, baselen);
 	while (n)
 	{
-		str[index] = base[n % baselen];
-		n /= baselen;
+		str[index] = base[n / exponent];
+		n %= n / exponent;
+		exponent /= baselen;
 		index += 1;
 	}
 	return (str);

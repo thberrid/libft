@@ -24,6 +24,13 @@
 # define FT_BYTSIZE 8
 # define FT_ERROR -1
 
+# define DEFAULT_STR_FLOAT_LEN 12
+
+# define	BASE_BIN	"01"
+# define	BASE_DEC	"0123456789"
+# define	BASE_OCT	"0123456789abcdef"
+# define	BASE_OCTUP	"0123456789ABCDEF"
+
 typedef struct	s_list
 {
 	void			*content;
@@ -33,6 +40,10 @@ typedef struct	s_list
 
 void			print_memory(const void *addr, size_t size);
 int				ft_intlen(int n, const char *base);
+int				ft_intexponent(int n, int baselen);
+int				ft_longexponent(long n, int baselen);
+int				ft_longlen(long n, const char *base);
+int				ft_ulonglen(unsigned long n, const char *base);
 void			ft_addrswap(void **addra, void **addrb);
 int				ft_factorial(int nb);
 int				ft_power(int nb, int power);
@@ -87,10 +98,11 @@ char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s);
 char			**ft_strsplit(char const *s, char c);
 char			*ft_itoa(int n);
-char			*ft_ftoa(float f);
+char			*ft_ftoa(float f, int precision);
 char			*ft_ltoa(long n);
 char			*ft_itoabase(int n, const char *base);
 char			*ft_ltoabase(long n, const char *base);
+char			*ft_ultoabase(unsigned long n, const char *base);
 void			ft_putascii(void *ptr, size_t len);
 void			ft_putchar(char c);
 void			ft_putstr(char const *s);

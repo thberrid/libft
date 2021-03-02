@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_ltoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thberrid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: thberrid <thberrid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/24 14:46:40 by thberrid          #+#    #+#             */
-/*   Updated: 2021/02/24 14:46:42 by thberrid         ###   ########.fr       */
+/*   Created: 2021/03/01 23:38:38 by thberrid          #+#    #+#             */
+/*   Updated: 2021/03/01 23:38:40 by thberrid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-int main(void)
+char	*ft_ltoa(long n)
 {
-	char	m[1024];
-
-	ft_printf("ok boomer %s et remet moi ca %s\n", "lol", "ilol");
-	return (0);
+    return (ft_ltoabase(n, BASE_DEC));
 }

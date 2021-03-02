@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ltoabase.c                                      :+:      :+:    :+:   */
+/*   ft_ultoabase.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thberrid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: thberrid <thberrid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/28 15:12:13 by thberrid          #+#    #+#             */
-/*   Updated: 2021/02/28 15:12:18 by thberrid         ###   ########.fr       */
+/*   Created: 2021/03/01 14:17:26 by thberrid          #+#    #+#             */
+/*   Updated: 2021/03/01 14:17:27 by thberrid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-char	*ft_ltoabase(long n, const char *base)
+char	*ft_ultoabase(unsigned long n, const char *base)
 {
 	int		baselen;
 	char	*str;
@@ -23,16 +23,11 @@ char	*ft_ltoabase(long n, const char *base)
 	if (!base)
 		base = BASE_DEC;
 	baselen = ft_strlen(base);
-	strlen = ft_longlen(n, base);
+	strlen = ft_ulonglen(n, base);
 	index = 0;
 	if (!(str = ft_strnew(strlen)))
 		return (NULL);
-	if (n < 0)
-	{
-		str[0] = '-';
-		index += 1;
-	}
-	exponent = ft_longexponent(n, baselen);
+	exponent = ft_intexponent(n, baselen);
 	while (n)
 	{
 		str[index] = base[n / exponent];
@@ -42,4 +37,3 @@ char	*ft_ltoabase(long n, const char *base)
 	}
 	return (str);
 }
-

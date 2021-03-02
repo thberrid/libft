@@ -30,6 +30,10 @@ SRCS = get_next_line.c \
 	   ft_atol.c \
 	   ft_bzero.c \
 	   ft_intlen.c \
+	   ft_intexponent.c \
+	   ft_longexponent.c \
+	   ft_longlen.c \
+	   ft_ulonglen.c \
 	   ft_isalnum.c \
 	   ft_ischarset.c \
 	   ft_isalpha.c \
@@ -42,6 +46,7 @@ SRCS = get_next_line.c \
 	   ft_ftoa.c \
 	   ft_ltoa.c \
 	   ft_ltoabase.c \
+	   ft_ultoabase.c \
 	   ft_lstadd.c \
 	   ft_lstgetlast.c \
 	   ft_lstgetn.c \
@@ -108,7 +113,7 @@ INC_NAME 	= libft.h \
 			  ft_printf.h
 INCDIR 		= includes
 CPPFLAGS 	= -I ./$(INCDIR)
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g3
 OBJS_NAME 	= $(SRCS:.c=.o)
 OBJS 		= $(addprefix $(OBJDIR)/, $(OBJS_NAME))
 FILES_H 	= $(addprefix $(INCDIR)/, $(INC_NAME))
@@ -127,8 +132,7 @@ $(OBJDIR):
 	mkdir -p $@
 
 test: all
-	$(CC) $(FLAGS) $(CPPFLAGS) -c -o $(OBJDIR)/test.o main.c
-	$(CC) $(CPPFLAGS) -L . -lft -o test $(FILES_O) $(OBJDIR)/test.o
+	$(CC) main.c $(FLAGS) $(CPPFLAGS) -L . -lft -o test
 
 .PHONY: clean
 clean: 

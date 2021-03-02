@@ -24,14 +24,7 @@
 # define    PFT_LONG    6
 # define    PFT_PERCENT 7
 
-# define    PFB_BIN     2
-# define    PFB_DEC     10
-# define    PFB_OCT     16
-
-# define	PFB_BIN		"01"
-# define	PFB_DEC		"0123456789"
-# define	PFB_OCT		"0123456789abcdef"
-# define	PFB_OCTUP	"0123456789ABCDEF"
+# define    PF_DEFAULT_PRECISION 6
 
 typedef struct  s_pf_flag
 {
@@ -59,7 +52,7 @@ typedef struct  s_pfstr_align
 {
     int     id;
     int    (*f)(t_pf_flag *, char **);
-}               t__pfstr_align;
+}               t_pfstr_align;
 
 int			    ft_printf(const char *restrict format, ...);
 int		        ft_dprintf(int fd, const char *restrict format, ...);

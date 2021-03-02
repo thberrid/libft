@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_longexponent.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thberrid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: thberrid <thberrid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/24 14:46:40 by thberrid          #+#    #+#             */
-/*   Updated: 2021/02/24 14:46:42 by thberrid         ###   ########.fr       */
+/*   Created: 2021/03/01 23:07:03 by thberrid          #+#    #+#             */
+/*   Updated: 2021/03/01 23:07:32 by thberrid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-
-int main(void)
+int	ft_longexponent(long n, int baselen)
 {
-	char	m[1024];
+	int		exponent;
 
-	ft_printf("ok boomer %s et remet moi ca %s\n", "lol", "ilol");
-	return (0);
+	exponent = 1;
+	while (n / exponent)
+		exponent *= baselen;
+	return (exponent);
 }

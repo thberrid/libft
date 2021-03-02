@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_longlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thberrid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: thberrid <thberrid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/24 14:46:40 by thberrid          #+#    #+#             */
-/*   Updated: 2021/02/24 14:46:42 by thberrid         ###   ########.fr       */
+/*   Created: 2021/03/01 16:47:57 by thberrid          #+#    #+#             */
+/*   Updated: 2021/03/01 16:48:20 by thberrid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-int main(void)
+int		ft_longlen(long n, const char *base)
 {
-	char	m[1024];
+	int		len;
+	int		base_len;
 
-	ft_printf("ok boomer %s et remet moi ca %s\n", "lol", "ilol");
-	return (0);
+	base_len = ft_strlen(base);
+	len = 0;
+	if (n < 0)
+	{
+		n *= -1;
+		len += 1;
+	}
+	while (n)
+	{
+		n /= base_len;
+		len += 1;
+	}
+	return (len);
 }
