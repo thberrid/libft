@@ -299,7 +299,10 @@ int		vaarg_getchar(t_pf_flag *flags, char **s, va_list ap)
 {
 	char 	arg;
 
-	arg = (char)va_arg(ap, int);
+	if (flags->padd_fill == '%')
+		arg = '%';
+	else
+		arg = (char)va_arg(ap, int);
 	*s = ft_strdup(&arg);
 	if (!s)
 		return (0);
