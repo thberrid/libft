@@ -12,7 +12,7 @@
 
 int	ft_longexponent(long n, int baselen)
 {
-	int		exponent;
+	long	exponent;
 
 	exponent = 1;
 	while (n / exponent >= baselen)

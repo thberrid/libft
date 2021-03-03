@@ -14,11 +14,11 @@
 
 char	*ft_ultoabase(unsigned long n, const char *base)
 {
-	int		baselen;
-	char	*str;
-	int		strlen;
-	int		index;
-	int		exponent;
+	int				baselen;
+	char			*str;
+	int				strlen;
+	int				index;
+	unsigned long	exponent;
 
 	if (!base)
 		base = BASE_DEC;
@@ -27,7 +27,7 @@ char	*ft_ultoabase(unsigned long n, const char *base)
 	index = 0;
 	if (!(str = ft_strnew(strlen)))
 		return (NULL);
-	exponent = ft_longexponent(n, baselen);
+	exponent = ft_ulongexponent(n, baselen);
 	while (exponent)
 	{
 		str[index] = base[n / exponent];

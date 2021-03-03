@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_ulongexponent(unsigned long n, int baselen)
+unsigned long	ft_ulongexponent(unsigned long n, unsigned int baselen)
 {
-	int		exponent;
+	unsigned long		exponent;
 
 	exponent = 1;
-	while (n / exponent >= (unsigned int)baselen)
+	while (exponent && (n / exponent >= baselen))
 		exponent *= baselen;
 	return (exponent);
 }

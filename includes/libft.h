@@ -45,7 +45,7 @@ void			print_memory(const void *addr, size_t size);
 int				ft_intlen(int n, const char *base);
 int				ft_intexponent(int n, int baselen);
 int				ft_longexponent(long n, int baselen);
-int				ft_ulongexponent(unsigned long n, int baselen);
+unsigned long	ft_ulongexponent(unsigned long n, unsigned int baselen);
 int				ft_longlen(long n, const char *base);
 int				ft_ulonglen(unsigned long n, const char *base);
 void			ft_addrswap(void **addra, void **addrb);
