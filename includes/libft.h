@@ -29,10 +29,10 @@
 
 # define DEFAULT_STR_FLOAT_LEN 12
 
-# define	BASE_BIN	"01"
-# define	BASE_DEC	"0123456789"
-# define	BASE_OCT	"0123456789abcdef"
-# define	BASE_OCTUP	"0123456789ABCDEF"
+# define BASE_BIN	"01"
+# define BASE_DEC	"0123456789"
+# define BASE_OCT	"0123456789abcdef"
+# define BASE_OCTUP	"0123456789ABCDEF"
 
 typedef struct	s_list
 {
