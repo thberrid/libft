@@ -21,6 +21,16 @@ OBJDIR = obj
 NAME = libft.a
 SRCS = get_next_line.c \
 	   ft_printf.c \
+	   ft_printf_align.c \
+	   ft_printf.c \
+	   ft_printf_setflag_align.c \
+	   ft_printf_setflag_base.c \
+	   ft_printf_setflag_disp.c \
+	   ft_printf_setflag_misc.c \
+	   ft_printf_setflag_type.c \
+	   ft_printf_vaarg_disp.c \
+	   ft_printf_vaarg_numeric.c \
+	   ft_printf_vaarg_str.c \
 	   print_memory.c \
  	   ft_addrswap.c \
 	   ft_factorial.c \

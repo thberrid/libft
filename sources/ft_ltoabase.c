@@ -12,7 +12,17 @@
 
 #include <libft.h>
 
-char	*ft_ltoabase(long n, const char *base)
+static void		set_sign(char *str, int *index, long *n)
+{
+	if (*n < 0)
+	{
+		str[0] = '-';
+		*index += 1;
+		*n *= -1;
+	}
+}
+
+char			*ft_ltoabase(long n, const char *base)
 {
 	int		baselen;
 	char	*str;
@@ -27,11 +37,7 @@ char	*ft_ltoabase(long n, const char *base)
 	index = 0;
 	if (!(str = ft_strnew(strlen)))
 		return (NULL);
-	if (n < 0)
-	{
-		str[0] = '-';
-		index += 1;
-	}
+	set_sign(str, &index, &n);
 	exponent = ft_longexponent(n, baselen);
 	while (exponent)
 	{
@@ -42,4 +48,3 @@ char	*ft_ltoabase(long n, const char *base)
 	}
 	return (str);
 }
-

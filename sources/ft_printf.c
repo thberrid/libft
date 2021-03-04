@@ -12,7 +12,7 @@
 
 #include <libft.h>
 
-int		flags_getlen(const char *str)
+static int	flags_getlen(const char *str)
 {
 	int		index;
 
@@ -26,370 +26,11 @@ int		flags_getlen(const char *str)
 	return (index);
 }
 
-int		fset_zero(t_pf_flag *flags, const char *fmt)
-{
-	(void)fmt;
-	if (flags->padd_fill)
-		return (0);
-	flags->padd_fill = '0';
-	return (1);
-}
-
-int		fset_space(t_pf_flag *flags, const char *fmt)
-{
-	(void)fmt;
-	if (flags->padd_fill)
-		return (0);
-	flags->padd_fill = ' ';
-	return (1);
-}
-
-int		fset_dec(t_pf_flag *flags, const char *fmt)
-{
-	(void)fmt;
-	if (flags->base)
-		return (0);
-	if (!flags->type)
-		flags->type = PFT_INT;
-	flags->base = BASE_DEC;
-	return (1);
-}
-
-int		fset_oct(t_pf_flag *flags, const char *fmt)
-{
-	(void)fmt;
-	if (flags->base)
-		return (0);
-	flags->base = BASE_OCT;
-	if (!flags->type)
-		flags->type = PFT_INT;
-	return (1);
-}
-
-int		fset_bin(t_pf_flag *flags, const char *fmt)
-{
-	(void)fmt;
-	if (flags->base)
-		return (0);
-	flags->base = BASE_BIN;
-	if (!flags->type)
-		flags->type = PFT_INT;
-	return (1);
-}
-
-int		fset_float(t_pf_flag *flags, const char *fmt)
-{
-	(void)fmt;
-	if (flags->type)
-		return (0);
-	if (flags->base)
-		return (0);
-	flags->base = BASE_DEC;
-	flags->type = PFT_FLOAT;
-	return (1);
-}
-
-int		fset_char(t_pf_flag *flags, const char *fmt)
-{
-	(void)fmt;
-	if (flags->type)
-		return (0);
-	flags->type = PFT_CHAR;
-	return (1);
-}
-
-int		fset_str(t_pf_flag *flags, const char *fmt)
-{
-	(void)fmt;
-	if (flags->type)
-		return (0);
-	flags->type = PFT_STR;
-	return (1);
-}
-
-int		fset_ptr(t_pf_flag *flags, const char *fmt)
-{
-	(void)fmt;
-	if (flags->type)
-		return (0);
-	flags->type = PFT_PTR;
-	return (1);
-}
-
-int		fset_long(t_pf_flag *flags, const char *fmt)
-{
-	(void)fmt;
-	flags->type = PFT_LONG;
-	return (1);
-}
-
-int		fset_percent(t_pf_flag *flags, const char *fmt)
-{
-	if (flags->fieldlen || flags->padd_fill || flags->precision ||
-		flags->type || flags->base)
-		return (0);
-	if (!ft_isspace(fmt[1]))
-		return (0);
-	flags->padd_fill = '%';
-	flags->type = PFT_CHAR;
-	flags->fieldlen = 1;
-	return (1);
-}
-
-int		fset_len(t_pf_flag *flags, const char *fmt)
-{
-	int		retrn;
-
-	(void)fmt;
-	if (flags->fieldlen)
-		return (0);
-	if (!flags->padd_fill)
-		flags->padd_fill = ' ';
-	flags->fieldlen = ft_atoi(fmt);
-	retrn = 0;
-	while (ft_isdigit(fmt[retrn]))
-		retrn += 1;
-	return (retrn);
-}
-
-
-int		fset_precision(t_pf_flag *flags, const char *fmt)
-{
-	if (flags->precision)
-		return (0);
-	if (!ft_isdigit(fmt[1]) || fmt[1] == '0')
-		return (0);
-	flags->precision = ft_atoi(&fmt[1]);
-	return (ft_intlen(flags->precision, BASE_DEC));
-}
-
-t_flags_settings	*get_f_settings(void)
-{
-	static t_flags_settings fl_sets[14] = {
-		{ ".", fset_precision },
-		{ "0", fset_zero },
-		{ "d", fset_dec },
-		{ "f", fset_float },
-		{ "c", fset_char },
-		{ "s", fset_str },
-		{ "l", fset_long },
-		{ "p", fset_ptr },
-		{ "o", fset_oct },
-		{ "b", fset_bin },
-		{ "%", fset_percent },
-		{ "123456789", fset_len },
-		{ NULL, NULL },
-	};
-	return (fl_sets);
-}
-
-t_pfstr_align	*pf_getaligmnt()
-{
-	static t_pfstr_align ftype[1] = {
-		{ 0, NULL }
-	};
-	return (ftype);
-}
-
-
-int		pf_alignemnt(t_pf_flag *flags, char **str)
-{
-	t_pfstr_align	*falign;
-	int				index;
-
-	index = 0;
-	falign = pf_getaligmnt();
-	while (falign[index].id)
-	{
-		if (falign[index].id == flags->padd_fill)
-		{
-			if (falign[index].f(flags, str))
-				return (0);
-			return (1);
-		}
-		index += 1;
-	}
-	return (1);
-}
-
-int		vaarg_getint(t_pf_flag *flags, char **s, va_list ap)
-{
-	int 	arg;
-	size_t	s_len;
-
-	arg = va_arg(ap, int);
-	if (!flags->base)
-		flags->base = BASE_DEC;
-	*s = ft_itoabase(arg, flags->base);
-	if (!s)
-		return (0);
-	s_len = ft_strlen(*s);
-	if (!flags->fieldlen)
-		flags->fieldlen = s_len;
-	return (1);
-}
-
-int		vaarg_getlong(t_pf_flag *flags, char **s, va_list ap)
-{
-	long 	arg;
-	size_t	s_len;
-
-	arg = va_arg(ap, long);
-	if (!flags->base)
-		flags->base = BASE_DEC;
-	*s = ft_ltoabase(arg, flags->base);
-	if (!s)
-		return (0);
-	s_len = ft_strlen(*s);
-	if (!flags->fieldlen)
-		flags->fieldlen = s_len;
-	return (1);
-}
-
-int		vaarg_getptr(t_pf_flag *flags, char **s, va_list ap)
-{
-	void 	*arg;
-	size_t	s_len;
-
-	arg = va_arg(ap, void *);
-	if (!flags->base)
-		flags->base = BASE_OCTUP;
-	*s = ft_ultoabase((unsigned long)arg, flags->base);
-	if (!s)
-		return (0);
-	s_len = ft_strlen(*s);
-	if (!flags->fieldlen)
-		flags->fieldlen = s_len;
-	return (1);
-}
-
-int		vaarg_getstr(t_pf_flag *flags, char **s, va_list ap)
-{
-	char 	*arg;
-	size_t	s_len;
-
-	arg = va_arg(ap, char *);
-	if (!s)
-		return (0);
-	if (!(*s = ft_strdup(arg)))
-		return (0);
-	s_len = ft_strlen(*s);
-	if (!flags->fieldlen)
-		flags->fieldlen = s_len;
-	return (1);
-}
-
-int		vaarg_getfloat(t_pf_flag *flags, char **s, va_list ap)
-{
-	float 	arg;
-	size_t	s_len;
-
-	arg = (float)va_arg(ap, double);
-	if (!flags->precision)
-		flags->precision = PF_DEFAULT_PRECISION;
-	if (!(*s = ft_ftoa(arg, flags->precision)))
-		return (0);
-	s_len = ft_strlen(*s);
-	if (!flags->fieldlen)
-		flags->fieldlen = s_len;
-	return (1);
-}
-
-int		vaarg_getchar(t_pf_flag *flags, char **s, va_list ap)
-{
-	char 	arg;
-
-	if (flags->padd_fill == '%')
-		arg = '%';
-	else
-		arg = (char)va_arg(ap, int);
-	*s = ft_strdup(&arg);
-	if (!s)
-		return (0);
-	if (!flags->fieldlen)
-		flags->fieldlen = 1;
-	return (1);
-}
-
-int		vaarg_getpercent(t_pf_flag *flags, char **s, va_list ap)
-{
-	(void)ap;
-	*s = ft_strdup("%");
-	if (!*s)
-		return (0);
-	flags->fieldlen = 1;
-	return (1);
-}
-
-t_flags_types	*vaarg_gettype(void)
-{
-	static t_flags_types ftype[8] = {
-		{ PFT_INT, vaarg_getint },
-		{ PFT_PERCENT, vaarg_getpercent },
-		{ PFT_FLOAT, vaarg_getfloat },
-		{ PFT_CHAR, vaarg_getchar },
-		{ PFT_STR, vaarg_getstr },
-		{ PFT_PTR, vaarg_getptr },
-		{ PFT_LONG, vaarg_getlong },
-		{ 0, NULL }
-	};
-	return (ftype);
-}
-
-int		vaarg_get(t_pf_flag *flags, char **str, va_list ap)
-{
-	t_flags_types	*ftype;
-	int				index;
-
-	index = 0;
-	ftype = vaarg_gettype();
-	while (ftype[index].id)
-	{
-		if (ftype[index].id == flags->type)
-		{
-			if (!ftype[index].f(flags, str, ap))
-				return (0);
-			return (1);
-		}
-		index += 1;
-	}
-	return (0);
-}
-
-int		flags_parse(t_pf_flag *flags, const char *fmt)
-{
-	int					index;
-	int					jndex;
-	int					retrn;
-	t_flags_settings	*f_settings;
-
-	index = 1;
-	f_settings = get_f_settings();
-	while (fmt[index] && !ft_isspace(fmt[index]))
-	{
-		jndex = 0;
-		while (f_settings[jndex].id)
-		{
-			if (ft_ischarset(fmt[index], f_settings[jndex].id))
-			{
-				if (!(retrn = f_settings[jndex].f(flags, &fmt[index])))
-					return (0);
-				index += retrn;
-				break ;
-			}
-			jndex += 1;
-		}
-	}
-	if (!flags->type)
-		return (0);
-	return (1);
-}
-
-int		arg_print(int fd, const char *fmt, va_list ap)
+static int	arg_print(int fd, const char *fmt, va_list ap)
 {
 	t_pf_flag	flags;
-	int		retrn;
-	char	*str;
+	int			retrn;
+	char		*str;
 
 	str = NULL;
 	ft_bzero(&flags, sizeof(t_pf_flag));
@@ -407,7 +48,7 @@ int		arg_print(int fd, const char *fmt, va_list ap)
 	return (retrn);
 }
 
-int		uprintf(int fd, const char *restrict format, va_list ap)
+int			uprintf(int fd, const char *restrict format, va_list ap)
 {
 	int		current;
 	int		printed;
@@ -436,7 +77,7 @@ int		uprintf(int fd, const char *restrict format, va_list ap)
 	return (printed + flushed);
 }
 
-int		ft_printf(const char *restrict format, ...)
+int			ft_printf(const char *restrict format, ...)
 {
 	va_list	ap;
 	int		retrn;
@@ -447,7 +88,7 @@ int		ft_printf(const char *restrict format, ...)
 	return (retrn);
 }
 
-int		ft_dprintf(int fd, const char *restrict format, ...)
+int			ft_dprintf(int fd, const char *restrict format, ...)
 {
 	va_list	ap;
 	int		retrn;
