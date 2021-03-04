@@ -12,7 +12,7 @@
 
 #include <libft.h>
 
-static int	put_radix(int radix, char *str, int precision)
+static int	put_radix(int radix, char *str)
 {
 	int		index;
 	int		decimal;
@@ -56,7 +56,7 @@ char		*ft_ftoa(float f, int precision)
 	len = ft_intlen(radix, BASE_DEC) + precision;
 	if (!(str = ft_strnew(len)))
 		return (NULL);
-	index = put_radix(radix, str, precision);
+	index = put_radix(radix, str);
 	if (!precision)
 		return (str);
 	index = put_dot(str, index);
