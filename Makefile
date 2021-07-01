@@ -6,7 +6,7 @@
 #    By: thberrid <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/17 17:15:46 by thberrid          #+#    #+#              #
-#    Updated: 2019/05/31 21:28:03 by thberrid         ###   ########.fr        #
+#    Updated: 2021/07/01 16:28:24 by thberrid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRCS = get_next_line.c \
 	   ft_ischarset.c \
 	   ft_isalpha.c \
 	   ft_isascii.c \
+	   ft_isnumeric.c \
 	   ft_isdigit.c \
 	   ft_isspace.c \
 	   ft_isprint.c \

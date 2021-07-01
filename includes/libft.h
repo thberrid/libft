@@ -6,7 +6,7 @@
 /*   By: thberrid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 12:57:04 by thberrid          #+#    #+#             */
-/*   Updated: 2019/05/31 20:09:58 by thberrid         ###   ########.fr       */
+/*   Updated: 2021/07/01 16:28:00 by thberrid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ long			ft_atol(const char *str);
 int				ft_isalpha(int c);
 int				ft_ischarset(int c, char *charset);
 int				ft_isdigit(int c);
+int				ft_isnumeric(const char *s);
 int				ft_isalnum(int c);
 int				ft_isascii(int c);
 int				ft_isspace(int c);
