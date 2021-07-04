@@ -45,6 +45,7 @@ SRCS = get_next_line.c \
 	   ft_ulongexponent.c \
 	   ft_longlen.c \
 	   ft_ulonglen.c \
+	   ft_htons.c \
 	   ft_isalnum.c \
 	   ft_ischarset.c \
 	   ft_isalpha.c \
