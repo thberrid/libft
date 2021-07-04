@@ -45,6 +45,7 @@ int					flags_parse(t_pf_flag *flags, const char *fmt)
 	while (fmt[index] && !ft_isspace(fmt[index]))
 	{
 		jndex = 0;
+		retrn = 0;
 		while (f_settings[jndex].id)
 		{
 			if (ft_ischarset(fmt[index], f_settings[jndex].id))
@@ -56,6 +57,8 @@ int					flags_parse(t_pf_flag *flags, const char *fmt)
 			}
 			jndex += 1;
 		}
+		if (retrn == 0)
+			break ;
 	}
 	if (!flags->type)
 		return (0);

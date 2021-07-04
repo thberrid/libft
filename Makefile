@@ -126,7 +126,7 @@ INC_NAME 	= libft.h \
 			  ft_printf.h
 INCDIR 		= includes
 CPPFLAGS 	= -I ./$(INCDIR)
-CFLAGS		= -Wall -Wextra -Werror -g3
+CFLAGS		= -Wall -Wextra -Werror -g3 #-fsanitize=address
 OBJS_NAME 	= $(SRCS:.c=.o)
 OBJS 		= $(addprefix $(OBJDIR)/, $(OBJS_NAME))
 FILES_H 	= $(addprefix $(INCDIR)/, $(INC_NAME))
