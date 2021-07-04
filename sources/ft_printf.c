@@ -12,21 +12,7 @@
 
 #include <libft.h>
 
-static int	flags_getlen(const char *str)
-{
-	int		index;
-
-	index = 0;
-	while (str[index])
-	{
-		if (ft_isspace(str[index]))
-			break ;
-		index += 1;
-	}
-	return (index);
-}
-
-static int	arg_print(int fd, const char *fmt, va_list ap)
+static int	arg_print(int fd, const char *fmt, va_list ap, int *flaglen)
 {
 	t_pf_flag	flags;
 	int			retrn;
@@ -34,7 +20,7 @@ static int	arg_print(int fd, const char *fmt, va_list ap)
 
 	str = NULL;
 	ft_bzero(&flags, sizeof(t_pf_flag));
-	retrn = flags_parse(&flags, fmt);
+	retrn = flags_parse(&flags, fmt, flaglen);
 	if (retrn)
 		retrn = vaarg_get(&flags, &str, ap);
 	else
@@ -54,6 +40,7 @@ int			uprintf(int fd, const char *restrict format, va_list ap)
 	int		printed;
 	int		flushed;
 	int		from;
+	int		flaglen;
 
 	flushed = 0;
 	printed = 0;
@@ -63,12 +50,13 @@ int			uprintf(int fd, const char *restrict format, va_list ap)
 	{
 		if (format[current] == '%')
 		{
+			flaglen = 0;
 			flushed = write(fd, &format[from], current - from);
 			printed += flushed;
-			if (!(flushed = arg_print(fd, &format[current], ap)))
+			if (!(flushed = arg_print(fd, &format[current], ap, &flaglen)))
 				return (-1);
 			printed += flushed;
-			current += flags_getlen(&format[current]);
+			current += flaglen;
 			from = current;
 		}
 		current += 1;

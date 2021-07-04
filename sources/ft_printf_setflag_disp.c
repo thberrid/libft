@@ -33,7 +33,7 @@ t_flags_settings	*get_f_settings(void)
 	return (fl_sets);
 }
 
-int					flags_parse(t_pf_flag *flags, const char *fmt)
+int					flags_parse(t_pf_flag *flags, const char *fmt, int *flaglen)
 {
 	int					index;
 	int					jndex;
@@ -62,5 +62,6 @@ int					flags_parse(t_pf_flag *flags, const char *fmt)
 	}
 	if (!flags->type)
 		return (0);
+	*flaglen = index;
 	return (1);
 }

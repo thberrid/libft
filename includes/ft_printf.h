@@ -82,7 +82,7 @@ int					fset_bin(t_pf_flag *flags, const char *fmt);
 int					fset_zero(t_pf_flag *flags, const char *fmt);
 int					fset_space(t_pf_flag *flags, const char *fmt);
 t_flags_settings	*get_f_settings(void);
-int					flags_parse(t_pf_flag *flags, const char *fmt);
+int					flags_parse(t_pf_flag *flags, const char *fmt, int *flaglen);
 
 t_pfstr_align		*pf_getaligmnt(void);
 int					pf_alignemnt(t_pf_flag *flags, char **str);
