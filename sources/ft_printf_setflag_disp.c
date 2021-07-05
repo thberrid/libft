@@ -57,6 +57,8 @@ int					flags_parse(t_pf_flag *flags, const char *fmt, int *flaglen)
 			}
 			jndex += 1;
 		}
+		if (fmt[index] == '%')
+			break ;
 		if (retrn == 0)
 			break ;
 	}

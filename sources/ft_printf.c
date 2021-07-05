@@ -59,7 +59,8 @@ int			uprintf(int fd, const char *restrict format, va_list ap)
 			current += flaglen;
 			from = current;
 		}
-		current += 1;
+		if (format[current] != '%')
+			current += 1;
 	}
 	flushed = write(fd, &format[from], current - from);
 	return (printed + flushed);

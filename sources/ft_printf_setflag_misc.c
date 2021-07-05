@@ -14,11 +14,13 @@
 
 int		fset_percent(t_pf_flag *flags, const char *fmt)
 {
-	if (flags->fieldlen || flags->padd_fill || flags->precision ||
-		flags->type || flags->base)
-		return (0);
-	if (!ft_isspace(fmt[1]))
-		return (0);
+	(void)fmt;
+	if (flags->type)
+		return (1);
+//	if (flags->fieldlen || flags->padd_fill || flags->precision || flags->base)
+//		return (0);
+//	if (!ft_isspace(fmt[1]))
+//		return (0);
 	flags->padd_fill = '%';
 	flags->type = PFT_CHAR;
 	flags->fieldlen = 1;
